@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.bitWatcher" parent="Theme.MaterialComponents">
+        <item name="toolbarStyle">@style/Widget.bitWatcher.Toolbar</item>
+    </style>
+
+    <style name="Theme.bitWatcher.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

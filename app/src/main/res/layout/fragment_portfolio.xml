@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="jp.maskedronin.bitwatcher.presentation.portfolio.PortfolioViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_tiny" />
+
+            <TextView
+                android:id="@+id/total_valuation_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{viewModel.totalValuationText}'
+                android:textSize="@dimen/font_large"
+                tools:text="100,000,000,000 JPY" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_small" />
+
+            <include layout="@layout/include_portfolio_header" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_tiny" />
+
+            <View
+                style="@style/Widget.bitWatcher.View.Divider"
+                android:layout_width="match_parent" />
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="@{viewModel.enableRateRefresh}"
+                app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+                app:refreshing="@{viewModel.rateRefreshing}">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/portfolio_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/register_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/spacing_normal"
+            android:onClick="@{() -> viewModel.onFloatingPlusButtonClick()}"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="?attr/colorSurface" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

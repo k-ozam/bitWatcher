@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.bitWatcher.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary" />
+
+    <style name="Widget.bitWatcher.ToolbarContentIcon" parent="">
+        <item name="android:tint">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ToolbarContentText" parent="">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.bitWatcher.View.Divider" parent="">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="Widget.bitWatcher.EditText.PropertyAmount" parent="Widget.AppCompat.EditText">
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Link.Off">
+        <item name="android:src">@drawable/ic_link_off</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Link.Success">
+        <item name="android:tint">@color/cyan_300</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Link" parent="">
+        <item name="android:src">@drawable/ic_link</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Check.Success">
+        <item name="android:tint">@color/cyan_300</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Check" parent="">
+        <item name="android:src">@drawable/ic_check_circle</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Error" parent="">
+        <item name="android:src">@drawable/ic_error</item>
+        <item name="android:tint">?attr/colorError</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Delete" parent="">
+        <item name="android:src">@drawable/ic_delete</item>
+    </style>
+
+    <style name="Widget.bitWatcher.ImageView.Icon.Edit" parent="">
+        <item name="android:src">@drawable/ic_edit</item>
+    </style>
+
+    <style name="Widget.bitWatcher.TextView.Valid" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/cyan_300</item>
+    </style>
+
+    <style name="Widget.bitWatcher.TextView.Invalid" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorError</item>
+    </style>
+</resources>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="jp.maskedronin.bitwatcher.presentation.portfolio.PortfolioItem" />
+
+        <variable
+            name="viewModel"
+            type="jp.maskedronin.bitwatcher.presentation.portfolio.PortfolioRecyclerAdapter.ViewHolder.ViewModel" />
+
+        <import type="jp.maskedronin.bitwatcher.presentation.common.Formatter" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/spacing_tiny">
+
+        <TextView
+            android:id="@+id/currency"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{item.currency.symbol}"
+            android:textColor="@{item.currency.colorResource.apply(context)}"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="MOSAIC.CMS" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:gravity="center"
+            android:text="@{item.exchange.canonicalName}"
+            app:layout_constraintEnd_toEndOf="@+id/currency"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currency"
+            tools:text="bitFlyer" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:text='@{Formatter.formatPropertyAmount(item.amount)}'
+            app:layout_constraintBottom_toTopOf="@+id/valuation"
+            app:layout_constraintEnd_toStartOf="@id/right"
+            app:layout_constraintStart_toEndOf="@+id/left"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="100,000,000.0" />
+
+        <TextView
+            android:id="@+id/valuation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:text='@{item.valuation == null ? "" : Formatter.formatValue(item.valuation) + " " + viewModel.settlement.symbol}'
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/right"
+            app:layout_constraintStart_toEndOf="@+id/left"
+            app:layout_constraintTop_toBottomOf="@+id/amount"
+            tools:text="100,000,000,000 JPY" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.625" />
+
+        <TextView
+            android:id="@+id/rate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:text='@{item.rate == null ? "" : Formatter.formatValue(item.rate) + " " + viewModel.settlement.symbol}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/right"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="100,000,000,000 JPY" />
+
+        <ImageView
+            android:id="@+id/rate_update_error_icon"
+            style="@style/Widget.bitWatcher.ImageView.Icon.Error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:visibility="@{item.latestRate ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

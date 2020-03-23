@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/launchFragment">
+
+    <fragment
+        android:id="@+id/launchFragment"
+        android:name="jp.maskedronin.bitwatcher.presentation.launch.LaunchFragment"
+        android:label="LaunchFragment">
+
+        <action
+            android:id="@+id/action_launch_to_onboarding"
+            app:destination="@id/navigation_onboarding" />
+
+        <action
+            android:id="@+id/action_launch_to_portfolio"
+            app:destination="@id/portfolioFragment" />
+    </fragment>
+
+    <navigation
+        android:id="@+id/navigation_onboarding"
+        app:startDestination="@id/onboardingFragment">
+
+        <fragment
+            android:id="@+id/onboardingFragment"
+            android:name="jp.maskedronin.bitwatcher.presentation.onboarding.OnboardingFragment"
+            android:label="OnboardingFragment" />
+
+        <action
+            android:id="@+id/action_onboarding_to_portfolio"
+            app:destination="@id/portfolioFragment" />
+    </navigation>
+
+    <fragment
+        android:id="@+id/portfolioFragment"
+        android:name="jp.maskedronin.bitwatcher.presentation.portfolio.PortfolioFragment"
+        android:label="PortfolioFragment">
+
+        <action
+            android:id="@+id/action_portfolio_to_propertyRegister"
+            app:destination="@id/navigation_property_register" />
+
+        <action
+            android:id="@+id/action_portfolio_to_exchangeAccountRegister"
+            app:destination="@id/navigation_exchange_account_register" />
+
+    </fragment>
+
+    <action
+        android:id="@+id/action_to_notification"
+        app:destination="@id/notificationFragment" />
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="jp.maskedronin.bitwatcher.presentation.notification.NotificationFragment"
+        android:label="NotificationFragment">
+
+        <action
+            android:id="@+id/action_notification_to_exchangeAccountRegister"
+            app:destination="@id/navigation_exchange_account_register" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_to_settings"
+        app:destination="@id/navigation_settings" />
+
+    <navigation
+        android:id="@+id/navigation_settings"
+        app:startDestination="@id/settingsFragment">
+
+        <fragment
+            android:id="@+id/settingsFragment"
+            android:name="jp.maskedronin.bitwatcher.presentation.settings.SettingsFragment"
+            android:label="SettingsFragment">
+
+            <action
+                android:id="@+id/action_settings_to_exchangeAccountSettings"
+                app:destination="@id/exchangeAccountSettingsFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/exchangeAccountSettingsFragment"
+            android:name="jp.maskedronin.bitwatcher.presentation.settings.ExchangeAccountSettingsFragment"
+            android:label="ExchangeAccountSettingsFragment">
+
+            <action
+                android:id="@+id/action_settings_to_exchangeAccountRegister"
+                app:destination="@id/navigation_exchange_account_register" />
+        </fragment>
+    </navigation>
+
+    <navigation
+        android:id="@+id/navigation_property_register"
+        app:startDestination="@id/propertyRegisterFragment">
+
+        <fragment
+            android:id="@+id/propertyRegisterFragment"
+            android:name="jp.maskedronin.bitwatcher.presentation.propertyregister.PropertyRegisterFragment"
+            android:label="PropertyRegisterFragment" />
+    </navigation>
+
+    <navigation
+        android:id="@+id/navigation_exchange_account_register"
+        app:startDestination="@id/exchangeAccountRegisterFragment">
+
+        <fragment
+            android:id="@+id/exchangeAccountRegisterFragment"
+            android:name="jp.maskedronin.bitwatcher.presentation.exchangeaccountregister.ExchangeAccountRegisterFragment"
+            android:label="exchangeAccountRegisterFragment">
+
+            <argument
+                android:name="exchangeInt"
+                android:defaultValue="-1"
+                app:argType="integer" />
+        </fragment>
+    </navigation>
+</navigation>

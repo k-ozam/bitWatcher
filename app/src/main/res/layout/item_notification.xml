@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="jp.maskedronin.bitwatcher.presentation.notification.NotificationRecyclerAdapter.ViewHolder.ViewModel" />
+
+        <variable
+            name="notification"
+            type="jp.maskedronin.bitwatcher.domain.entity.Notification" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_small"
+        android:onClick="@{() -> viewModel.onNotificationClick(notification)}"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:contentPadding="@dimen/spacing_small">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{notification.message.apply(context)}"
+            android:textSize="@dimen/font_normal"
+            tools:text="ユーザーへの通知。こんにちは！\nさようなら！" />
+
+    </androidx.cardview.widget.CardView>
+</layout>

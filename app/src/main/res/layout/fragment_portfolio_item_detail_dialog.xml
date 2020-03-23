@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="jp.maskedronin.bitwatcher.presentation.portfolio.PortfolioItem" />
+
+        <import type="jp.maskedronin.bitwatcher.presentation.common.Formatter" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_normal">
+
+            <TextView
+                android:id="@+id/exchange_label_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="@string/exchange"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/exchange_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text='@{item.exchange.canonicalName}'
+                android:textSize="@dimen/font_large"
+                app:layout_constraintStart_toStartOf="@+id/exchange_label_text"
+                app:layout_constraintTop_toBottomOf="@+id/exchange_label_text"
+                tools:text="bitFlyer" />
+
+            <TextView
+                android:id="@+id/amount_label_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="@string/amount"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exchange_text" />
+
+            <TextView
+                android:id="@+id/amount_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text='@{Formatter.formatPropertyAmount(item.amount, 8) + " " + item.currency.symbol}'
+                android:textSize="@dimen/font_large"
+                app:layout_constraintStart_toStartOf="@+id/amount_label_text"
+                app:layout_constraintTop_toBottomOf="@+id/amount_label_text"
+                tools:text="100,000,000,000.00 BTC" />
+
+            <TextView
+                android:id="@+id/amount_updated_at_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text='@{Formatter.formatDateTime(item.amountUpdatedAt)}'
+                android:textSize="@dimen/font_small"
+                app:layout_constraintStart_toStartOf="@+id/amount_text"
+                app:layout_constraintTop_toBottomOf="@+id/amount_text"
+                tools:text="2020/04/03 23:31:32" />
+
+            <TextView
+                android:id="@+id/valuation_label_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="@string/valuation"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amount_updated_at_text" />
+
+            <TextView
+                android:id="@+id/valuation_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text='@{(item.valuation == null ? "---" : Formatter.formatValue(item.valuation, 8)) + " " + item.settlement.symbol}'
+                android:textSize="@dimen/font_large"
+                app:layout_constraintStart_toStartOf="@+id/valuation_label_text"
+                app:layout_constraintTop_toBottomOf="@+id/valuation_label_text"
+                tools:text="100,000,000,000.00 JPY" />
+
+            <TextView
+                android:id="@+id/rate_label_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:text="@string/rate"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/valuation_text" />
+
+            <TextView
+                android:id="@+id/rate_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text='@{(item.rate == null ? "---" : Formatter.formatValue(item.rate, 8)) + " " + item.settlement.symbol}'
+                android:textSize="@dimen/font_large"
+                app:layout_constraintStart_toStartOf="@+id/rate_label_text"
+                app:layout_constraintTop_toBottomOf="@+id/rate_label_text"
+                tools:text="100,000,000,000.00 JPY" />
+
+            <TextView
+                android:id="@+id/rate_updated_at_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text='@{item.rateUpdatedAt == null ? @string/portfolio_item_detail_rate_null_message : Formatter.formatDateTime(item.rateUpdatedAt)}'
+                android:textSize="@dimen/font_small"
+                app:layout_constraintStart_toStartOf="@+id/rate_text"
+                app:layout_constraintTop_toBottomOf="@+id/rate_text"
+                tools:text="2020/04/03 23:31:32" />
+
+            <ImageView
+                android:id="@+id/rate_update_error_icon"
+                style="@style/Widget.bitWatcher.ImageView.Icon.Error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_tiny"
+                android:visibility="@{item.isLatestRate ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@+id/rate_updated_at_text"
+                app:layout_constraintStart_toEndOf="@+id/rate_updated_at_text"
+                app:layout_constraintTop_toTopOf="@+id/rate_updated_at_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

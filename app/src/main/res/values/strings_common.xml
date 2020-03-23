@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">bitWatcher</string>
+
+    <string name="unselected">未選択</string>
+    <string name="register">登録</string>
+    <string name="close">閉じる</string>
+
+    <!-- message -->
+    <string name="delete_completed_message">削除しました</string>
+
+    <!-- error message -->
+    <string name="error_exchange_api_unauthorized_message">%1$s APIとの連携に失敗しました\nAPI Key / Secret に誤りがある可能性があります</string>
+    <string name="error_network_inactive_message">ネットワークに接続できません</string>
+    <string name="error_http_request_invalid_message">通信中にエラーが発生しました\n</string>
+    <string name="error_http_unauthorized_message">通信中にエラーが発生しました\n認証情報に誤りがある可能性があります</string>
+    <string name="error_http_internal_server_message">通信中にエラーが発生しました\nサーバー側で不具合が発生している可能性があります</string>
+    <string name="error_http_unknown_message">通信中にエラーが発生しました</string>
+    <string name="error_http_app_bug_message">通信中にエラーが発生しました\nこのメッセージが繰り返し表示される場合は、アプリ自体に不具合がある可能性があります</string>
+    <string name="error_unknown_host">サーバーに接続できません(%1$s)</string>
+    <string name="error_unknown">エラーが発生しました\nこのメッセージが繰り返し表示される場合は、アプリ自体に不具合がある可能性があります</string>
+</resources>

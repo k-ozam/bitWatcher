@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="isRefreshIconVisible"
+            type="Boolean" />
+
+        <variable
+            name="refreshIconAnimRes"
+            type="jp.maskedronin.bitwatcher.presentation.common.resource.AnimationResource" />
+
+        <variable
+            name="onRefreshIconClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="isNotificationIconVisible"
+            type="Boolean" />
+
+        <variable
+            name="onNotificationIconClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onSettingsIconClick"
+            type="android.view.View.OnClickListener" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{onRefreshIconClick}"
+            android:orientation="vertical"
+            android:visibility="@{isRefreshIconVisible ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                style="@style/Widget.bitWatcher.ToolbarContentIcon"
+                android:layout_width="@dimen/icon_normal"
+                android:layout_height="@dimen/icon_normal"
+                android:src="@drawable/ic_sync"
+                app:animation="@{refreshIconAnimRes.apply(context)}" />
+
+            <TextView
+                style="@style/Widget.bitWatcher.ToolbarContentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/balance"
+                android:textSize="@dimen/font_small" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="@dimen/spacing_normal"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            style="@style/Widget.bitWatcher.ToolbarContentIcon"
+            android:layout_width="@dimen/icon_normal"
+            android:layout_height="@dimen/icon_normal"
+            android:onClick="@{onNotificationIconClick}"
+            android:src="@drawable/ic_notification_important"
+            android:visibility="@{isNotificationIconVisible ? View.VISIBLE : View.GONE}" />
+
+        <Space
+            android:layout_width="@dimen/spacing_normal"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            style="@style/Widget.bitWatcher.ToolbarContentIcon"
+            android:layout_width="@dimen/icon_normal"
+            android:layout_height="@dimen/icon_normal"
+            android:onClick="@{onSettingsIconClick}"
+            android:src="@drawable/ic_settings" />
+
+    </LinearLayout>
+</layout>

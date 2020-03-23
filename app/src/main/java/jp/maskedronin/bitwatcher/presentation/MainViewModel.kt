@@ -1,0 +1,142 @@
+package jp.maskedronin.bitwatcher.presentation
+
+import androidx.lifecycle.*
+import com.hadilq.liveevent.LiveEvent
+import jp.maskedronin.bitwatcher.R
+import jp.maskedronin.bitwatcher.domain.usecase.*
+import jp.maskedronin.bitwatcher.presentation.common.SnackbarConfig
+import jp.maskedronin.bitwatcher.presentation.common.ThrowableHandler
+import jp.maskedronin.bitwatcher.presentation.common.ToastConfig
+import jp.maskedronin.bitwatcher.presentation.common.resource.AnimationResource
+import jp.maskedronin.bitwatcher.presentation.common.resource.StringResource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+class MainViewModel(
+    private val getSettlementCurrency: GetSettlementCurrencyUseCase,
+    private val refreshExchangeRate: RefreshExchangeRateUseCase,
+    getAllExchangeAccounts: GetAllExchangeAccountsUseCase,
+    private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
+    getNotificationsUseCase: GetNotificationsUseCase
+) : ViewModel() {
+    private val throwableHandler = ThrowableHandler(
+        onHandle = { message, type ->
+            when (type) {
+                ThrowableHandler.MessageType.SHORT_SENTENCE -> _snackbarEvent.postValue(
+                    SnackbarConfig(
+                        message,
+                        SnackbarConfig.Duration.INDEFINITE
+                    )
+                )
+                ThrowableHandler.MessageType.LONG_SENTENCE -> _messageDialogEvent.postValue(message)
+            }
+        }
+    )
+
+    private val _toastEvent = LiveEvent<ToastConfig>()
+    val toastEvent: LiveData<ToastConfig> = _toastEvent
+
+    private val _snackbarEvent = LiveEvent<SnackbarConfig>()
+    val snackbarEvent: LiveData<SnackbarConfig> = _snackbarEvent
+
+    private val _messageDialogEvent = LiveEvent<StringResource>()
+    val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
+
+    val refreshIconVisible: LiveData<Boolean> = getAllExchangeAccounts()
+        .map { it.isNotEmpty() }
+        .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+
+    val refreshIconAnimRes: LiveData<AnimationResource?> = refreshPropertyAmount
+        .isProcessing
+        .map { isProcessing ->
+            if (isProcessing)
+                AnimationResource(R.anim.rotation_forever)
+            else null
+        }
+        .asLiveData()
+
+    val notificationIconVisible: LiveData<Boolean> = getNotificationsUseCase()
+        .map { it.isNotEmpty() }
+        .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+
+    private val _notificationEvent = LiveEvent<Unit>()
+    val notificationEvent: LiveData<Unit> = _notificationEvent
+
+    private val _settingsEvent = LiveEvent<Unit>()
+    val settingsEvent: LiveData<Unit> = _settingsEvent
+
+    init {
+        // 基準通貨が変更されたらレートを更新する
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                getSettlementCurrency()
+                    .filterNotNull()
+                    .collectLatest {
+                        refreshExchangeRate()
+                    }
+            }.onSuccess {
+                _toastEvent.postValue(
+                    ToastConfig(
+                        StringResource.from(R.string.rate_update_completed_message),
+                        duration = ToastConfig.Duration.SHORT
+                    )
+                )
+            }.onFailure { throwable ->
+                throwableHandler.handle(throwable)
+            }
+        }
+    }
+
+    fun onRefreshIconClick() {
+        _toastEvent.value =
+            ToastConfig(
+                StringResource.from(R.string.property_amount_refresh_started_message),
+                ToastConfig.Duration.SHORT
+            )
+
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                refreshPropertyAmount()
+            }.onSuccess {
+                _toastEvent.postValue(
+                    ToastConfig(
+                        StringResource.from(R.string.property_amount_refresh_completed_message),
+                        ToastConfig.Duration.SHORT
+                    )
+                )
+            }.onFailure { throwable ->
+                throwableHandler.handle(throwable)
+            }
+        }
+    }
+
+    fun onNotificationIconClick() {
+        _notificationEvent.value = Unit
+    }
+
+    fun onSettingsIconClick() {
+        _settingsEvent.value = Unit
+    }
+
+    class Factory @Inject constructor(
+        private val getSettlementCurrency: GetSettlementCurrencyUseCase,
+        private val refreshExchangeRate: RefreshExchangeRateUseCase,
+        private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
+        private val getAllExchangeAccounts: GetAllExchangeAccountsUseCase,
+        private val getNotificationsUseCase: GetNotificationsUseCase
+    ) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+            MainViewModel(
+                getSettlementCurrency,
+                refreshExchangeRate,
+                getAllExchangeAccounts,
+                refreshPropertyAmount,
+                getNotificationsUseCase
+            ) as T
+    }
+}

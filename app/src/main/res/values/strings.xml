@@ -1,0 +1,43 @@
+<resources>
+    <string name="settlement_currency_select_dialog_title">基準通貨を設定してください</string>
+    <string name="settlement_currency_setting_completed_message">基準通貨を設定しました</string>
+
+    <string name="exchange_select_dialog_title">取引所を選択してください</string>
+    <string name="currency_select_dialog_title">通貨を選択してください</string>
+
+    <string name="portfolio_title">@string/app_name</string>
+
+    <string name="portfolio_item_detail_rate_null_message">未取得</string>
+
+    <string name="rate_update_completed_message">レートを更新しました</string>
+    <string name="property_amount_refresh_started_message">保有量の更新を開始しました</string>
+    <string name="property_amount_refresh_completed_message">保有量を更新しました</string>
+
+    <string name="property_action_modify_amount_label">保有量を変更する</string>
+    <string name="property_action_delete_label">削除する</string>
+
+    <string name="portfolio_register_action_link_exchange_api_label">取引所APIと連携する\n(資産残高を自動取得)</string>
+    <string name="portfolio_register_action_manually_label">手動で資産を追加する</string>
+
+    <string name="property_amount_modify_dialog_title">保有量を入力してください</string>
+    <string name="property_amount_modify_positive_button">変更</string>
+    <string name="property_amount_modify_completed_message">保有量を変更しました</string>
+    <string name="property_delete_completed_message">@string/delete_completed_message</string>
+
+    <string name="exchange_account_register_title">取引所APIとの連携</string>
+
+    <string name="exchange_api_settings_title">@string/exchange_account_register_title</string>
+    <string name="no_exchange_apis_available_message">連携できる取引所がありません</string>
+    <string name="exchange_api_unlink_confirm_dialog_message">%1$s APIとの連携を解除します</string>
+    <string name="exchange_api_unlink_completed_message">%1$s APIとの連携を解除しました</string>
+    <string name="exchange_api_link_confirm_dialog_message">連携にはアプリの再起動が必要です。\n「%1$s」をタップすると再起動します。</string>
+
+    <string name="property_register_title">資産の追加</string>
+
+    <string name="settings_title">設定</string>
+    <string name="settings_menu_exchange_api_settings">@string/exchange_account_register_title</string>
+    <string name="settings_menu_oss_license">@string/oss_license_title</string>
+    <string name="oss_license_title">オープンソースライセンス</string>
+
+    <string name="notification_title">通知</string>
+</resources>

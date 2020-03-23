@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="currency">通貨</string>
+    <string name="exchange">取引所</string>
+    <string name="amount">保有量</string>
+    <string name="valuation">評価額</string>
+    <string name="rate">レート</string>
+    <string name="balance">残高</string>
+    <string name="settlement_currency">基準通貨</string>
+</resources>

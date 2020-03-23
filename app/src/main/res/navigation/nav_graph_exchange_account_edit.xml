@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_exchange_account_edit"
+    app:startDestination="@id/emptyFragment">
+
+    <action
+        android:id="@+id/action_to_emptyFragment"
+        app:destination="@id/emptyFragment" />
+
+    <action
+        android:id="@+id/action_to_exchangeAccountEditFragment"
+        app:destination="@id/exchangeAccountEditFragment" />
+
+    <fragment
+        android:id="@+id/emptyFragment"
+        android:name="androidx.fragment.app.Fragment"
+        android:label="EmptyFragment" />
+
+    <fragment
+        android:id="@+id/exchangeAccountEditFragment"
+        android:name="jp.maskedronin.bitwatcher.presentation.exchangeaccountedit.ExchangeAccountEditFragment"
+        android:label="ExchangeAccountEditFragment">
+
+        <argument
+            android:name="exchange"
+            app:argType="jp.maskedronin.bitwatcher.domain.valueobject.Exchange" />
+
+    </fragment>
+
+</navigation>
