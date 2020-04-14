@@ -7,6 +7,14 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.oss.licenses.plugin'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('../keystore-local-release.jks')
+            storePassword 'xxxxxx'
+            keyAlias 'key0'
+            keyPassword 'xxxxxx'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -40,6 +48,7 @@ android {
             buildConfigField("String", "DB_PASSPHRASE", "\"\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
