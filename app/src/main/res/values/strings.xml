@@ -9,6 +9,7 @@
 
     <string name="portfolio_item_detail_rate_null_message">未取得</string>
 
+    <string name="rate_update_started_message">レートの更新を開始しました</string>
     <string name="rate_update_completed_message">レートを更新しました</string>
     <string name="property_amount_refresh_started_message">保有量の更新を開始しました</string>
     <string name="property_amount_refresh_completed_message">保有量を更新しました</string>

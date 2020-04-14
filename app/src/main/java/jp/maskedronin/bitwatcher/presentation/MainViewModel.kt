@@ -19,8 +19,7 @@ import javax.inject.Inject
 class MainViewModel(
     private val getSettlementCurrency: GetSettlementCurrencyUseCase,
     private val refreshExchangeRate: RefreshExchangeRateUseCase,
-    getAllExchangeAccounts: GetAllExchangeAccountsUseCase,
-    private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
+    getPortfolioItemList: GetPortfolioItemListUseCase,
     getNotificationsUseCase: GetNotificationsUseCase
 ) : ViewModel() {
     private val throwableHandler = ThrowableHandler(
@@ -46,11 +45,11 @@ class MainViewModel(
     private val _messageDialogEvent = LiveEvent<StringResource>()
     val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
 
-    val refreshIconVisible: LiveData<Boolean> = getAllExchangeAccounts()
+    val refreshIconVisible: LiveData<Boolean> = getPortfolioItemList()
         .map { it.isNotEmpty() }
         .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
-    val refreshIconAnimRes: LiveData<AnimationResource?> = refreshPropertyAmount
+    val refreshIconAnimRes: LiveData<AnimationResource?> = refreshExchangeRate
         .isProcessing
         .map { isProcessing ->
             if (isProcessing)
@@ -95,19 +94,18 @@ class MainViewModel(
     }
 
     fun onRefreshIconClick() {
-        _toastEvent.value =
-            ToastConfig(
-                StringResource.from(R.string.property_amount_refresh_started_message),
-                ToastConfig.Duration.SHORT
-            )
+        _toastEvent.value = ToastConfig(
+            StringResource.from(R.string.rate_update_started_message),
+            ToastConfig.Duration.SHORT
+        )
 
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                refreshPropertyAmount()
+                refreshExchangeRate()
             }.onSuccess {
                 _toastEvent.postValue(
                     ToastConfig(
-                        StringResource.from(R.string.property_amount_refresh_completed_message),
+                        StringResource.from(R.string.rate_update_completed_message),
                         ToastConfig.Duration.SHORT
                     )
                 )
@@ -132,18 +130,16 @@ class MainViewModel(
     class Factory @Inject constructor(
         private val getSettlementCurrency: GetSettlementCurrencyUseCase,
         private val refreshExchangeRate: RefreshExchangeRateUseCase,
-        private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
-        private val getAllExchangeAccounts: GetAllExchangeAccountsUseCase,
-        private val getNotificationsUseCase: GetNotificationsUseCase
+        private val getPortfolioItemList: GetPortfolioItemListUseCase,
+        private val getNotifications: GetNotificationsUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
             MainViewModel(
                 getSettlementCurrency,
                 refreshExchangeRate,
-                getAllExchangeAccounts,
-                refreshPropertyAmount,
-                getNotificationsUseCase
+                getPortfolioItemList,
+                getNotifications
             ) as T
     }
 }
