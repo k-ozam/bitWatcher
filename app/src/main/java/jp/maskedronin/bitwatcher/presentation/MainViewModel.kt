@@ -69,6 +69,9 @@ class MainViewModel(
     private val _settingsEvent = LiveEvent<Unit>()
     val settingsEvent: LiveData<Unit> = _settingsEvent
 
+    private val isPortfolioShown = MutableLiveData(false)
+    val toolbarMenuVisible: LiveData<Boolean> = isPortfolioShown
+
     init {
         // 基準通貨が変更されたらレートを更新する
         viewModelScope.launch(Dispatchers.IO) {
@@ -120,6 +123,10 @@ class MainViewModel(
 
     fun onSettingsIconClick() {
         _settingsEvent.value = Unit
+    }
+
+    fun setPortfolioShown(shown: Boolean) {
+        isPortfolioShown.value = shown
     }
 
     class Factory @Inject constructor(

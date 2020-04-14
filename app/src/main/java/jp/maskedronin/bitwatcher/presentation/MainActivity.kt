@@ -14,10 +14,10 @@ import androidx.navigation.fragment.NavHostFragment
 import dagger.android.AndroidInjection
 import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.databinding.ActivityMainBinding
+import jp.maskedronin.bitwatcher.presentation.common.LoggerFragmentLifecycleCallbacks
 import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeToast
-import jp.maskedronin.bitwatcher.presentation.common.LoggerFragmentLifecycleCallbacks
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +50,12 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.registerFragmentLifecycleCallbacks(
             LoggerFragmentLifecycleCallbacks, true
         )
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            viewModel.setPortfolioShown(
+                destination.id == R.id.portfolioFragment
+            )
+        }
 
         viewModel.notificationEvent.observe(this, Observer {
             navController.navigate(R.id.action_to_notification)
