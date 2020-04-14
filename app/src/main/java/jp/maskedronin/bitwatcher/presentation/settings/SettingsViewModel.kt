@@ -52,6 +52,9 @@ class SettingsViewModel(
     private val _ossLisenceEvent = LiveEvent<Unit>()
     val ossLicenseEvent: LiveData<Unit> = _ossLisenceEvent
 
+    private val _contactEvent = LiveEvent<Unit>()
+    val contactEvent: LiveData<Unit> = _contactEvent
+
     fun onSettlementCurrencyClick() {
         _settlementCurrencySelectDialogEvent.value = Unit
     }
@@ -83,6 +86,10 @@ class SettingsViewModel(
 
     fun onOssLicenseClick() {
         _ossLisenceEvent.value = Unit
+    }
+
+    fun onContactClick() {
+        _contactEvent.value = Unit
     }
 
     class Factory @Inject constructor(

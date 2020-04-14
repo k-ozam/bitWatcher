@@ -2,6 +2,7 @@ package jp.maskedronin.bitwatcher.presentation.settings
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import dagger.android.support.AndroidSupportInjection
 import jp.maskedronin.bitwatcher.R
+import jp.maskedronin.bitwatcher.common.util.Constants
 import jp.maskedronin.bitwatcher.databinding.FragmentSettingsBinding
 import jp.maskedronin.bitwatcher.domain.valueobject.Currency
 import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
@@ -56,8 +58,13 @@ class SettingsFragment : Fragment() {
         viewModel.exchangeAccountEvent.observe(viewLifecycleOwner, Observer {
             toExchangeAccountSettings()
         })
+
         viewModel.ossLicenseEvent.observe(viewLifecycleOwner, Observer {
             toOssLicense()
+        })
+
+        viewModel.contactEvent.observe(viewLifecycleOwner, Observer {
+            toOfficialLineAccount()
         })
 
         viewModel.toastEvent.observe(viewLifecycleOwner, Observer {
@@ -91,6 +98,13 @@ class SettingsFragment : Fragment() {
         )
         startActivity(
             Intent(context, OssLicensesMenuActivity::class.java)
+        )
+    }
+
+    private fun toOfficialLineAccount() {
+        val lineAccountUri: Uri = Uri.parse(Constants.OFFICIAL_LINE_ACCOUNT_URL)
+        startActivity(
+            Intent(Intent.ACTION_VIEW, lineAccountUri)
         )
     }
 }

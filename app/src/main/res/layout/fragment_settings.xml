@@ -66,6 +66,20 @@
                 android:text="@string/settings_menu_oss_license"
                 android:textSize="@dimen/font_normal" />
 
+            <View
+                style="@style/Widget.bitWatcher.View.Divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small" />
+
+            <TextView
+                android:id="@+id/contact_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.onContactClick()}"
+                android:text="@string/settings_menu_contact"
+                android:textSize="@dimen/font_normal" />
+
         </LinearLayout>
     </ScrollView>
 </layout>

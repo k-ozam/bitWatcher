@@ -38,6 +38,7 @@
     <string name="settings_menu_exchange_api_settings">@string/exchange_account_register_title</string>
     <string name="settings_menu_oss_license">@string/oss_license_title</string>
     <string name="oss_license_title">オープンソースライセンス</string>
+    <string name="settings_menu_contact">お問い合わせ</string>
 
     <string name="notification_title">通知</string>
 </resources>
