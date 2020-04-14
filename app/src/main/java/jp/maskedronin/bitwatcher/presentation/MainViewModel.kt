@@ -3,7 +3,10 @@ package jp.maskedronin.bitwatcher.presentation
 import androidx.lifecycle.*
 import com.hadilq.liveevent.LiveEvent
 import jp.maskedronin.bitwatcher.R
-import jp.maskedronin.bitwatcher.domain.usecase.*
+import jp.maskedronin.bitwatcher.domain.usecase.GetNotificationsUseCase
+import jp.maskedronin.bitwatcher.domain.usecase.GetPortfolioItemListUseCase
+import jp.maskedronin.bitwatcher.domain.usecase.GetSettlementCurrencyUseCase
+import jp.maskedronin.bitwatcher.domain.usecase.RefreshExchangeRateUseCase
 import jp.maskedronin.bitwatcher.presentation.common.SnackbarConfig
 import jp.maskedronin.bitwatcher.presentation.common.ThrowableHandler
 import jp.maskedronin.bitwatcher.presentation.common.ToastConfig

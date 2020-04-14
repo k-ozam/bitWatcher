@@ -11,9 +11,9 @@ import dagger.android.support.AndroidSupportInjection
 import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.databinding.FragmentOnboardingBinding
 import jp.maskedronin.bitwatcher.domain.valueobject.Currency
+import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeToast
-import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
 import jp.maskedronin.bitwatcher.presentation.toPortfolio
 import javax.inject.Inject
 

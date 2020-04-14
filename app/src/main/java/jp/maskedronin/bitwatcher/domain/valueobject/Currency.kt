@@ -1,8 +1,8 @@
 package jp.maskedronin.bitwatcher.domain.valueobject
 
 import jp.maskedronin.bitwatcher.R
-import jp.maskedronin.bitwatcher.presentation.common.resource.ColorResource
 import jp.maskedronin.bitwatcher.common.util.Logger
+import jp.maskedronin.bitwatcher.presentation.common.resource.ColorResource
 import java.util.*
 
 private val CURRENCY_COLOR_UNDEFINED: ColorResource =

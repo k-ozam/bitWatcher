@@ -15,10 +15,10 @@ import dagger.android.support.AndroidSupportInjection
 import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.databinding.LinearRecyclerViewBinding
 import jp.maskedronin.bitwatcher.domain.valueobject.Exchange
-import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
-import jp.maskedronin.bitwatcher.presentation.common.extension.makeToast
 import jp.maskedronin.bitwatcher.presentation.common.MarginItemDecoration
 import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
+import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
+import jp.maskedronin.bitwatcher.presentation.common.extension.makeToast
 import jp.maskedronin.bitwatcher.presentation.toExchangeAccountRegister
 import javax.inject.Inject
 

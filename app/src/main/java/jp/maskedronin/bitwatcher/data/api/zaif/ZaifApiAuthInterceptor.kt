@@ -1,9 +1,9 @@
 package jp.maskedronin.bitwatcher.data.api.zaif
 
+import jp.maskedronin.bitwatcher.common.util.CryptUtil
 import jp.maskedronin.bitwatcher.data.api.ApiAuthInterceptor
 import jp.maskedronin.bitwatcher.data.extension.getAnnotation
 import jp.maskedronin.bitwatcher.data.extension.queryEncoded
-import jp.maskedronin.bitwatcher.common.util.CryptUtil
 import okhttp3.FormBody
 import okhttp3.Request
 

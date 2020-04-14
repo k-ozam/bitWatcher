@@ -1,7 +1,7 @@
 package jp.maskedronin.bitwatcher.data.api.poloniex
 
-import jp.maskedronin.bitwatcher.domain.valueobject.Currency
 import jp.maskedronin.bitwatcher.common.util.Constants
+import jp.maskedronin.bitwatcher.domain.valueobject.Currency
 import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 import javax.inject.Singleton

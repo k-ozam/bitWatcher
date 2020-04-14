@@ -12,4 +12,5 @@ fun SecureRandom.nextCharArray(charArray: CharArray) {
 }
 
 fun SecureRandom.nextChar(): Char = ALPHANUMERIC_AND_SYMBOL[nextInt(
-    ALPHANUMERIC_AND_SYMBOL.length)]
+    ALPHANUMERIC_AND_SYMBOL.length
+)]

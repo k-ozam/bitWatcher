@@ -1,8 +1,8 @@
 package jp.maskedronin.bitwatcher.data.api.binancejex
 
+import jp.maskedronin.bitwatcher.common.util.CryptUtil
 import jp.maskedronin.bitwatcher.data.api.ApiAuthInterceptor
 import jp.maskedronin.bitwatcher.data.extension.queryEncoded
-import jp.maskedronin.bitwatcher.common.util.CryptUtil
 import okhttp3.HttpUrl
 import okhttp3.Request
 

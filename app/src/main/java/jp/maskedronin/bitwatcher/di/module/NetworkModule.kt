@@ -6,9 +6,9 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import jp.maskedronin.bitwatcher.BuildConfig
-import jp.maskedronin.bitwatcher.di.ClientBuiltin
 import jp.maskedronin.bitwatcher.common.exception.NetworkInactiveException
 import jp.maskedronin.bitwatcher.common.util.isConnected
+import jp.maskedronin.bitwatcher.di.ClientBuiltin
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.Call

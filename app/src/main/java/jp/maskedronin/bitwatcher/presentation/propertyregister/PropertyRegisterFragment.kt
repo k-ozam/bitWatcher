@@ -14,8 +14,8 @@ import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.databinding.FragmentPropertyRegisterBinding
 import jp.maskedronin.bitwatcher.domain.valueobject.Currency
 import jp.maskedronin.bitwatcher.domain.valueobject.Exchange
-import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
 import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
+import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
 import jp.maskedronin.bitwatcher.presentation.toPrevious
 import javax.inject.Inject
 

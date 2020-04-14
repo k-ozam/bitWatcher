@@ -19,11 +19,7 @@ import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.databinding.FragmentPortfolioBinding
 import jp.maskedronin.bitwatcher.databinding.FragmentPortfolioItemDetailDialogBinding
 import jp.maskedronin.bitwatcher.databinding.IncludePropertyAmountModifyBinding
-import jp.maskedronin.bitwatcher.presentation.common.extension.canScrollDown
-import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
-import jp.maskedronin.bitwatcher.presentation.common.extension.makeToast
-import jp.maskedronin.bitwatcher.presentation.common.extension.resolveAttrResourceId
-import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
+import jp.maskedronin.bitwatcher.presentation.common.extension.*
 import jp.maskedronin.bitwatcher.presentation.common.resource.StringResource
 import jp.maskedronin.bitwatcher.presentation.toExchangeAccountRegister
 import jp.maskedronin.bitwatcher.presentation.toPropertyRegister

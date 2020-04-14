@@ -1,10 +1,10 @@
 package jp.maskedronin.bitwatcher.presentation.common
 
 import jp.maskedronin.bitwatcher.R
-import jp.maskedronin.bitwatcher.presentation.common.resource.StringResource
-import jp.maskedronin.bitwatcher.common.util.Logger
 import jp.maskedronin.bitwatcher.common.exception.ExchangeApiUnauthorizedException
 import jp.maskedronin.bitwatcher.common.exception.NetworkInactiveException
+import jp.maskedronin.bitwatcher.common.util.Logger
+import jp.maskedronin.bitwatcher.presentation.common.resource.StringResource
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
