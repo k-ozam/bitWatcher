@@ -62,12 +62,16 @@ object DebugTree : Timber.DebugTree() {
         Logger::class
     )
 
-    override fun createStackElementTag(element: StackTraceElement): String? =
-        Throwable().stackTrace.find { stackTraceElement ->
-            isLoggableClassName(stackTraceElement.className)
-        }!!.let { stackTraceElement ->
-            with(stackTraceElement) { "($fileName:$lineNumber)#$methodName" }
-        }
+    override fun createStackElementTag(element: StackTraceElement): String? {
+        val stackTrace = Throwable().stackTrace
+        val stackTraceElementForTag: StackTraceElement =
+            stackTrace.find { stackTraceElement ->
+                isLoggableClassName(stackTraceElement.className)
+            } ?: stackTrace.find { stackTraceElement ->
+                stackTraceElement.className.contains(BuildConfig.APPLICATION_ID).not()
+            }!!
+        return with(stackTraceElementForTag) { "($fileName:$lineNumber)#$methodName" }
+    }
 
     private fun isLoggableClassName(className: String): Boolean =
         className.contains(BuildConfig.APPLICATION_ID) &&
