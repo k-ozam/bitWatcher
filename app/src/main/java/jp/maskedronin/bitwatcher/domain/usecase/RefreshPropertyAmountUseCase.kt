@@ -1,10 +1,10 @@
 package jp.maskedronin.bitwatcher.domain.usecase
 
+import jp.maskedronin.bitwatcher.common.exception.ExchangeApiUnauthorizedException
 import jp.maskedronin.bitwatcher.domain.entity.ExchangeAccount
 import jp.maskedronin.bitwatcher.domain.repository.ExchangeAccountRepository
 import jp.maskedronin.bitwatcher.domain.repository.PropertyRepository
 import jp.maskedronin.bitwatcher.domain.valueobject.Exchange
-import jp.maskedronin.bitwatcher.common.exception.ExchangeApiUnauthorizedException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
@@ -60,11 +60,12 @@ class RefreshPropertyAmountUseCase @Inject constructor(
                 }
             }
             .filter { exchange ->
-                // インターバルが指定時間より短い場合は更新しない
-                exchangeAccountRepository.getAccount(exchange)!!
-                    .updatedAt
-                    ?.plusSeconds(AMOUNT_REFRESH_INTERVAL_MIN_SECONDS)
-                    ?.isAfter(LocalDateTime.now()) != true
+                true
+                // TODO: インターバルが指定時間より短い場合は更新しない
+//                exchangeAccountRepository.getAccount(exchange)!!
+//                    .updatedAt
+//                    ?.plusSeconds(AMOUNT_REFRESH_INTERVAL_MIN_SECONDS)
+//                    ?.isAfter(LocalDateTime.now()) != true
             }
             .also { exchanges ->
                 coroutineScope {

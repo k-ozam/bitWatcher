@@ -63,10 +63,11 @@ class RefreshExchangeRateUseCase @Inject constructor(
                     property.exchange
                 )?.updatedAt
 
-                // インターバルが指定時間より短い場合は価格更新しない
-                return@filter lastUpdatedAt
-                    ?.plusSeconds(refreshInterval)
-                    ?.isAfter(LocalDateTime.now()) != true
+                true
+                // TODO: インターバルが指定時間より短い場合は価格更新しない
+//                return@filter lastUpdatedAt
+//                    ?.plusSeconds(refreshInterval)
+//                    ?.isAfter(LocalDateTime.now()) != true
             }
             .map { property ->
                 coroutineScope {
