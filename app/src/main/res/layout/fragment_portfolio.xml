@@ -50,9 +50,9 @@
                 android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:enabled="@{viewModel.enableRateRefresh}"
+                android:enabled="@{viewModel.enableRefresh}"
                 app:onRefreshListener="@{() -> viewModel.onRefresh()}"
-                app:refreshing="@{viewModel.rateRefreshing}">
+                app:refreshing="@{viewModel.refreshing}">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/portfolio_recycler_view"

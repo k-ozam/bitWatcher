@@ -23,6 +23,7 @@ class PortfolioViewModel(
     getTotalValuation: GetTotalValuationUseCase,
     private val deleteProperty: DeletePropertyUseCase,
     private val updateProperty: UpdatePropertyUseCase,
+    private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
     private val refreshExchangeRate: RefreshExchangeRateUseCase
 ) : ViewModel(), PortfolioRecyclerAdapter.ViewHolder.ViewModel {
     private val throwableHandler = ThrowableHandler(
@@ -84,27 +85,45 @@ class PortfolioViewModel(
     val portfolioRegisterActionSelectDialogEvent: LiveData<Unit> =
         _portfolioRegisterActionSelectDialogEvent
 
-    val rateRefreshing: LiveData<Boolean> = refreshExchangeRate.isProcessing.asLiveData()
-
-    val enableRateRefresh: LiveData<Boolean> = combine(
+    val refreshing: LiveData<Boolean> = combine(
         refreshExchangeRate.isProcessing,
+        refreshPropertyAmount.isProcessing
+    ) { isRefreshingRate, isRefreshingAmount ->
+        isRefreshingRate || isRefreshingAmount
+    }.asLiveData(viewModelScope.coroutineContext)
+
+    val enableRefresh: LiveData<Boolean> = combine(
+        refreshExchangeRate.isProcessing,
+        refreshPropertyAmount.isProcessing,
         portfolioItemList.asFlow().map { list -> list.isEmpty() }
-    ) { isRefreshingRate, isPortfolioEmpty ->
+    ) { isRefreshingRate, isRefreshingAmount, isPortfolioEmpty ->
         when {
             isPortfolioEmpty -> false
             isRefreshingRate -> false
+            isRefreshingAmount -> false
             else -> true
         }
-    }.asLiveData()
+    }.asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
     fun onRefresh() {
+        _toastEvent.value = ToastConfig(
+            StringResource.from(R.string.property_amount_and_rate_update_started_message),
+            duration = ToastConfig.Duration.SHORT
+        )
+
         viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                refreshPropertyAmount()
+            }.onFailure { throwable ->
+                throwableHandler.handle(throwable)
+            }
+
             runCatching {
                 refreshExchangeRate()
             }.onSuccess {
                 _toastEvent.postValue(
                     ToastConfig(
-                        StringResource.from(R.string.rate_update_completed_message),
+                        StringResource.from(R.string.property_amount_and_rate_update_completed_message),
                         duration = ToastConfig.Duration.SHORT
                     )
                 )
@@ -184,6 +203,7 @@ class PortfolioViewModel(
         private val getTotalValuation: GetTotalValuationUseCase,
         private val deleteProperty: DeletePropertyUseCase,
         private val updateProperty: UpdatePropertyUseCase,
+        private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
         private val refreshExchangeRate: RefreshExchangeRateUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
@@ -194,6 +214,7 @@ class PortfolioViewModel(
                 getTotalValuation,
                 deleteProperty,
                 updateProperty,
+                refreshPropertyAmount,
                 refreshExchangeRate
             ) as T
     }
