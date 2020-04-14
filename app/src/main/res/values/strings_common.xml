@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">bitWatcher</string>
-
     <string name="unselected">未選択</string>
     <string name="register">登録</string>
     <string name="close">閉じる</string>

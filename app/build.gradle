@@ -39,12 +39,15 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
+            resValue("string", "app_name", "\"[debug]\"")
 
             def db_passphrase = "passphrase"
             buildConfigField("String", "DB_PASSPHRASE", "\"$db_passphrase\"")
             resValue("string", "DB_PASSWORD_$database_name", "\"$db_passphrase\"")
         }
         release {
+            resValue("string", "app_name", "\"bitWatcher\"")
+
             buildConfigField("String", "DB_PASSPHRASE", "\"\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
