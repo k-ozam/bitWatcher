@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -35,6 +37,9 @@ android {
             }
         }
         buildConfigField("String", "DB_NAME", "\"$database_name\"")
+
+        def dateTime = new SimpleDateFormat("yyyyMMddHHmm").format(new Date())
+        archivesBaseName = "${applicationId}_${versionCode}_${dateTime}"
     }
     buildTypes {
         debug {
