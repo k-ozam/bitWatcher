@@ -5,4 +5,7 @@ import jp.maskedronin.bitwatcher.domain.valueobject.Exchange
 class ExchangeApiUnauthorizedException(
     val exchange: Exchange,
     cause: Throwable
-) : RuntimeException(cause)
+) : RuntimeException(
+    "exchange=${exchange.canonicalName}",
+    cause
+)
