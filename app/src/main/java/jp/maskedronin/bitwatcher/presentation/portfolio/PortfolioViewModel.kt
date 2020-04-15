@@ -54,6 +54,7 @@ class PortfolioViewModel(
     val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
 
     private val _portfolioItemList: Flow<List<PortfolioItem>> = getPortfolioItemList()
+        .map { list -> list.sortedByDescending { it.valuation ?: 0.0 } }
     val portfolioItemList: LiveData<List<PortfolioItem>> = _portfolioItemList
         .debounce(REFRESH_DEBOUNCE_MILLIS)
         .catch { throwable -> throwableHandler.handle(throwable) }
