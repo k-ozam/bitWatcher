@@ -3,6 +3,7 @@
     <string name="unselected">未選択</string>
     <string name="register">登録</string>
     <string name="close">閉じる</string>
+    <string name="detail">詳細</string>
 
     <!-- message -->
     <string name="delete_completed_message">削除しました</string>

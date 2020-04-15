@@ -21,7 +21,11 @@ fun Activity.makeSnackbar(
     config.message.apply(this),
     config.duration.toInt()
 ).apply {
-    setAction(R.string.close) { dismiss() }
+    setAction(R.string.detail) {
+        dismiss()
+        createMessageDialog(config.message)
+            .show()
+    }
 }
 
 fun Activity.makeToast(config: ToastConfig): Toast =
