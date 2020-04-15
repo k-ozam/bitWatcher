@@ -17,7 +17,6 @@ import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.common.util.Constants
 import jp.maskedronin.bitwatcher.databinding.FragmentSettingsBinding
 import jp.maskedronin.bitwatcher.domain.valueobject.Currency
-import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeToast
 import jp.maskedronin.bitwatcher.presentation.toExchangeAccountSettings
@@ -73,10 +72,6 @@ class SettingsFragment : Fragment() {
 
         viewModel.snackbarEvent.observe(viewLifecycleOwner, Observer {
             makeSnackbar(config = it).show()
-        })
-
-        viewModel.messageDialogEvent.observe(viewLifecycleOwner, Observer { message ->
-            createMessageDialog(message).show()
         })
     }
 

@@ -31,16 +31,13 @@ class PortfolioViewModel(
     getAllExchangeAccounts: GetAllExchangeAccountsUseCase
 ) : ViewModel(), PortfolioRecyclerAdapter.ViewHolder.ViewModel {
     private val throwableHandler = ThrowableHandler(
-        onHandle = { message, type ->
-            when (type) {
-                ThrowableHandler.MessageType.SHORT_SENTENCE -> _snackbarEvent.postValue(
-                    SnackbarConfig(
-                        message,
-                        SnackbarConfig.Duration.INDEFINITE
-                    )
+        onHandle = { message ->
+            _snackbarEvent.postValue(
+                SnackbarConfig(
+                    message,
+                    SnackbarConfig.Duration.INDEFINITE
                 )
-                ThrowableHandler.MessageType.LONG_SENTENCE -> _messageDialogEvent.postValue(message)
-            }
+            )
         }
     )
 
@@ -49,9 +46,6 @@ class PortfolioViewModel(
 
     private val _toastEvent = LiveEvent<ToastConfig>()
     val toastEvent: LiveData<ToastConfig> = _toastEvent
-
-    private val _messageDialogEvent = LiveEvent<StringResource>()
-    val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
 
     private val _portfolioItemList: Flow<List<PortfolioItem>> = getPortfolioItemList()
         .map { list -> list.sortedByDescending { it.valuation ?: 0.0 } }

@@ -8,34 +8,26 @@ import jp.maskedronin.bitwatcher.presentation.common.resource.StringResource
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
-/**
- * @param onHandle (message, messageType)
- */
 class ThrowableHandler(
-    private val onHandle: (StringResource, MessageType) -> Unit
+    private val onHandle: (StringResource) -> Unit
 ) {
-    enum class MessageType {
-        SHORT_SENTENCE,
-        LONG_SENTENCE,
-    }
-
     fun handle(t: Throwable) {
         Logger.e(t)
 
-        val (message: StringResource, type: MessageType) = resolveMessage(t) ?: throw t
-        onHandle(message, type)
+        val message: StringResource = resolveMessage(t) ?: throw t
+        onHandle(message)
     }
 
-    private fun resolveMessage(t: Throwable): Pair<StringResource, MessageType>? = when (t) {
+    private fun resolveMessage(t: Throwable): StringResource? = when (t) {
         is ExchangeApiUnauthorizedException -> StringResource.from(
             R.string.error_exchange_api_unauthorized_message,
             t.exchange.canonicalName
-        ) to MessageType.LONG_SENTENCE
+        )
         is NetworkInactiveException ->
-            StringResource.from(R.string.error_network_inactive_message) to MessageType.SHORT_SENTENCE
-        is HttpException -> t.toUserNotifiableMessage() to MessageType.LONG_SENTENCE
-        is RuntimeException -> StringResource.from(R.string.error_unknown) to MessageType.SHORT_SENTENCE
-        is UnknownHostException -> StringResource.from(R.string.error_unknown_host) to MessageType.SHORT_SENTENCE
+            StringResource.from(R.string.error_network_inactive_message)
+        is HttpException -> t.toUserNotifiableMessage()
+        is RuntimeException -> StringResource.from(R.string.error_unknown)
+        is UnknownHostException -> StringResource.from(R.string.error_unknown_host)
         else -> null
     }
 }

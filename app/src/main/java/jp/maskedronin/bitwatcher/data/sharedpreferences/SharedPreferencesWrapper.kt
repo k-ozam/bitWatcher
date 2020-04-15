@@ -74,7 +74,8 @@ class SharedPreferencesWrapper @Inject constructor(
         }
     }
 
-    fun isSwipeRefreshTutorialEnabled(): Flow<Boolean?> = sharedPreferences.getNullableBooleanAsFlow(
-        SharedPreferencesElement.IS_SWIPE_REFRESH_TUTORIAL_ENABLED.key
-    )
+    fun isSwipeRefreshTutorialEnabled(): Flow<Boolean?> =
+        sharedPreferences.getNullableBooleanAsFlow(
+            SharedPreferencesElement.IS_SWIPE_REFRESH_TUTORIAL_ENABLED.key
+        )
 }

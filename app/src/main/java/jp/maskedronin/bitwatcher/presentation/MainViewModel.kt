@@ -26,16 +26,13 @@ class MainViewModel(
     getNotificationsUseCase: GetNotificationsUseCase
 ) : ViewModel() {
     private val throwableHandler = ThrowableHandler(
-        onHandle = { message, type ->
-            when (type) {
-                ThrowableHandler.MessageType.SHORT_SENTENCE -> _snackbarEvent.postValue(
-                    SnackbarConfig(
-                        message,
-                        SnackbarConfig.Duration.INDEFINITE
-                    )
+        onHandle = { message ->
+            _snackbarEvent.postValue(
+                SnackbarConfig(
+                    message,
+                    SnackbarConfig.Duration.INDEFINITE
                 )
-                ThrowableHandler.MessageType.LONG_SENTENCE -> _messageDialogEvent.postValue(message)
-            }
+            )
         }
     )
 
@@ -44,9 +41,6 @@ class MainViewModel(
 
     private val _snackbarEvent = LiveEvent<SnackbarConfig>()
     val snackbarEvent: LiveData<SnackbarConfig> = _snackbarEvent
-
-    private val _messageDialogEvent = LiveEvent<StringResource>()
-    val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
 
     val refreshIconVisible: LiveData<Boolean> = getPortfolioItemList()
         .map { it.isNotEmpty() }

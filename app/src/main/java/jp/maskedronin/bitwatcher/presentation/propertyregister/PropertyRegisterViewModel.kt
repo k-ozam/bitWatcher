@@ -9,8 +9,6 @@ import jp.maskedronin.bitwatcher.domain.valueobject.Currency
 import jp.maskedronin.bitwatcher.domain.valueobject.Exchange
 import jp.maskedronin.bitwatcher.presentation.common.SnackbarConfig
 import jp.maskedronin.bitwatcher.presentation.common.ThrowableHandler
-
-import jp.maskedronin.bitwatcher.presentation.common.resource.StringResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -25,24 +23,18 @@ class PropertyRegisterViewModel(
     allExchangeAccounts: GetAllExchangeAccountsUseCase
 ) : ViewModel() {
     private val throwableHandler = ThrowableHandler(
-        onHandle = { message, type ->
-            when (type) {
-                ThrowableHandler.MessageType.SHORT_SENTENCE -> _snackbarEvent.postValue(
-                    SnackbarConfig(
-                        message,
-                        SnackbarConfig.Duration.INDEFINITE
-                    )
+        onHandle = { message ->
+            _snackbarEvent.postValue(
+                SnackbarConfig(
+                    message,
+                    SnackbarConfig.Duration.INDEFINITE
                 )
-                ThrowableHandler.MessageType.LONG_SENTENCE -> _messageDialogEvent.postValue(message)
-            }
+            )
         }
     )
 
     private val _snackbarEvent = LiveEvent<SnackbarConfig>()
     val snackbarEvent: LiveData<SnackbarConfig> = _snackbarEvent
-
-    private val _messageDialogEvent = LiveEvent<StringResource>()
-    val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
 
     private val _currency = BroadcastChannel<Currency?>(Channel.CONFLATED)
         .apply { offer(null) }

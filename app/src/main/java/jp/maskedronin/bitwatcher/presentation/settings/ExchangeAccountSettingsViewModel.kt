@@ -25,16 +25,13 @@ class ExchangeAccountSettingsViewModel(
     ExchangeAccountRecyclerAdapter.ViewHolder.AccountInvalid.ViewModel,
     ExchangeAccountRecyclerAdapter.ViewHolder.AccountUnregistered.ViewModel {
     private val throwableHandler = ThrowableHandler(
-        onHandle = { message, type ->
-            when (type) {
-                ThrowableHandler.MessageType.SHORT_SENTENCE -> _snackbarEvent.postValue(
-                    SnackbarConfig(
-                        message,
-                        SnackbarConfig.Duration.INDEFINITE
-                    )
+        onHandle = { message ->
+            _snackbarEvent.postValue(
+                SnackbarConfig(
+                    message,
+                    SnackbarConfig.Duration.INDEFINITE
                 )
-                ThrowableHandler.MessageType.LONG_SENTENCE -> _messageDialogEvent.postValue(message)
-            }
+            )
         }
     )
 
@@ -43,9 +40,6 @@ class ExchangeAccountSettingsViewModel(
 
     private val _toastEvent = LiveEvent<ToastConfig>()
     val toastEvent: LiveData<ToastConfig> = _toastEvent
-
-    private val _messageDialogEvent = LiveEvent<StringResource>()
-    val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
 
     val exchangeToAccountList: LiveData<List<Pair<Exchange, ExchangeAccount?>>> =
         getAllExchangeAccounts().map { exchangeAccountList ->

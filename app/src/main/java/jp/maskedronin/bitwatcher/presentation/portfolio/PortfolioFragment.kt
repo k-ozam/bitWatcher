@@ -134,10 +134,6 @@ class PortfolioFragment : Fragment() {
         viewModel.snackbarEvent.observe(viewLifecycleOwner, Observer {
             makeSnackbar(config = it).show()
         })
-
-        viewModel.messageDialogEvent.observe(viewLifecycleOwner, Observer { message ->
-            createMessageDialog(message).show()
-        })
     }
 
     private fun initPortfolioView() {

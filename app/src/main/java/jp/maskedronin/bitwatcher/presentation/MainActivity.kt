@@ -15,7 +15,6 @@ import dagger.android.AndroidInjection
 import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.databinding.ActivityMainBinding
 import jp.maskedronin.bitwatcher.presentation.common.LoggerFragmentLifecycleCallbacks
-import jp.maskedronin.bitwatcher.presentation.common.extension.createMessageDialog
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeSnackbar
 import jp.maskedronin.bitwatcher.presentation.common.extension.makeToast
 import javax.inject.Inject
@@ -71,10 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.snackbarEvent.observe(this, Observer {
             makeSnackbar(config = it).show()
-        })
-
-        viewModel.messageDialogEvent.observe(this, Observer { message ->
-            createMessageDialog(message).show()
         })
     }
 
