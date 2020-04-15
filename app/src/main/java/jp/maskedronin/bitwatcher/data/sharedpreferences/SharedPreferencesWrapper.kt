@@ -2,6 +2,7 @@ package jp.maskedronin.bitwatcher.data.sharedpreferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import jp.maskedronin.bitwatcher.data.extension.getNullableBooleanAsFlow
 import jp.maskedronin.bitwatcher.data.extension.getNullableEnumAsFlow
 import jp.maskedronin.bitwatcher.data.extension.putEnum
 import jp.maskedronin.bitwatcher.di.Encrypt
@@ -63,4 +64,17 @@ class SharedPreferencesWrapper @Inject constructor(
             putString(SharedPreferencesElement.DATABASE_PASSPHRASE.key, passphrase)
         }
     }
+
+    fun setSwipeRefreshTutorialEnabled(enabled: Boolean) {
+        sharedPreferences.edit(commit = true) {
+            putBoolean(
+                SharedPreferencesElement.IS_SWIPE_REFRESH_TUTORIAL_ENABLED.key,
+                enabled
+            )
+        }
+    }
+
+    fun isSwipeRefreshTutorialEnabled(): Flow<Boolean?> = sharedPreferences.getNullableBooleanAsFlow(
+        SharedPreferencesElement.IS_SWIPE_REFRESH_TUTORIAL_ENABLED.key
+    )
 }

@@ -14,6 +14,7 @@
     <dimen name="spacing_tiny">4dp</dimen>
 
     <dimen name="card_corner_radius">4dp</dimen>
+    <dimen name="card_corner_radius_large">24dp</dimen>
 
     <dimen name="icon_large">48dp</dimen>
     <dimen name="icon_normal">24dp</dimen>

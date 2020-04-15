@@ -3,13 +3,16 @@ package jp.maskedronin.bitwatcher.presentation.portfolio
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +22,7 @@ import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.databinding.FragmentPortfolioBinding
 import jp.maskedronin.bitwatcher.databinding.FragmentPortfolioItemDetailDialogBinding
 import jp.maskedronin.bitwatcher.databinding.IncludePropertyAmountModifyBinding
+import jp.maskedronin.bitwatcher.databinding.PopupSwipeRefreshTutorialBinding
 import jp.maskedronin.bitwatcher.presentation.common.extension.*
 import jp.maskedronin.bitwatcher.presentation.common.resource.StringResource
 import jp.maskedronin.bitwatcher.presentation.toExchangeAccountRegister
@@ -32,6 +36,24 @@ class PortfolioFragment : Fragment() {
 
     private val binding: FragmentPortfolioBinding by lazy {
         FragmentPortfolioBinding.inflate(layoutInflater)
+    }
+
+    private val swipeRefreshTutorialPopup: PopupWindow by lazy {
+        PopupWindow(context)
+            .apply {
+                contentView = PopupSwipeRefreshTutorialBinding
+                    .inflate(layoutInflater)
+                    .root
+                setBackgroundDrawable(null)
+
+                contentView.setOnClickListener {
+                    dismiss()
+                    viewModel.onSwipeRefreshTutorialCloseClick()
+                }
+                lifecycle.observeEvent(Lifecycle.Event.ON_STOP) {
+                    dismiss()
+                }
+            }
     }
 
     override fun onAttach(context: Context) {
@@ -66,6 +88,15 @@ class PortfolioFragment : Fragment() {
                 with(binding.registerButton) {
                     if (registerButtonVisible) show() else hide()
                 }
+            }
+        })
+
+        viewModel.swipeRefreshTutorialVisible.observe(viewLifecycleOwner, Observer { isVisible ->
+            if (isVisible) {
+                swipeRefreshTutorialPopup
+                    .showAtLocation(binding.swipeRefreshLayout, Gravity.CENTER, 0, 0)
+            } else {
+                swipeRefreshTutorialPopup.dismiss()
             }
         })
 

@@ -12,4 +12,7 @@ interface SettingsRepository {
 
     fun isOnboardingCompleted(): Boolean
     suspend fun setOnboardingCompleted(completed: Boolean)
+
+    fun isSwipeRefreshTutorialEnabled(): Flow<Boolean?>
+    suspend fun setSwipeRefreshTutorialEnabled(enabled: Boolean)
 }

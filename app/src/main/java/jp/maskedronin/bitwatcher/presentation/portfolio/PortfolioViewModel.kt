@@ -5,6 +5,7 @@ import com.hadilq.liveevent.LiveEvent
 import jp.maskedronin.bitwatcher.R
 import jp.maskedronin.bitwatcher.domain.usecase.*
 import jp.maskedronin.bitwatcher.domain.valueobject.Currency
+import jp.maskedronin.bitwatcher.domain.valueobject.Tutorial
 import jp.maskedronin.bitwatcher.presentation.common.Formatter
 import jp.maskedronin.bitwatcher.presentation.common.SnackbarConfig
 import jp.maskedronin.bitwatcher.presentation.common.ThrowableHandler
@@ -24,7 +25,10 @@ class PortfolioViewModel(
     private val deleteProperty: DeletePropertyUseCase,
     private val updateProperty: UpdatePropertyUseCase,
     private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
-    private val refreshExchangeRate: RefreshExchangeRateUseCase
+    private val refreshExchangeRate: RefreshExchangeRateUseCase,
+    isTutorialEnabled: IsTutorialEnabled,
+    private val setTutorialEnabled: SetTutorialEnabled,
+    getAllExchangeAccounts: GetAllExchangeAccountsUseCase
 ) : ViewModel(), PortfolioRecyclerAdapter.ViewHolder.ViewModel {
     private val throwableHandler = ThrowableHandler(
         onHandle = { message, type ->
@@ -49,7 +53,8 @@ class PortfolioViewModel(
     private val _messageDialogEvent = LiveEvent<StringResource>()
     val messageDialogEvent: LiveData<StringResource> = _messageDialogEvent
 
-    val portfolioItemList: LiveData<List<PortfolioItem>> = getPortfolioItemList()
+    private val _portfolioItemList: Flow<List<PortfolioItem>> = getPortfolioItemList()
+    val portfolioItemList: LiveData<List<PortfolioItem>> = _portfolioItemList
         .debounce(REFRESH_DEBOUNCE_MILLIS)
         .catch { throwable -> throwableHandler.handle(throwable) }
         .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
@@ -92,24 +97,60 @@ class PortfolioViewModel(
         isRefreshingRate || isRefreshingAmount
     }.asLiveData(viewModelScope.coroutineContext)
 
-    val enableRefresh: LiveData<Boolean> = combine(
+    private val _enableRefresh: Flow<Boolean> = combine(
         refreshExchangeRate.isProcessing,
         refreshPropertyAmount.isProcessing,
-        portfolioItemList.asFlow().map { list -> list.isEmpty() }
-    ) { isRefreshingRate, isRefreshingAmount, isPortfolioEmpty ->
+        _portfolioItemList.map { it.isNotEmpty() },
+        getAllExchangeAccounts().map { it.isNotEmpty() }
+    ) { isRefreshingRate, isRefreshingAmount, isPortfolioNotEmpty, exchangeAccountExists ->
         when {
-            isPortfolioEmpty -> false
             isRefreshingRate -> false
             isRefreshingAmount -> false
-            else -> true
+            isPortfolioNotEmpty -> true
+            exchangeAccountExists -> true
+            else -> false
         }
-    }.asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+    }
+    val enableRefresh: LiveData<Boolean> = _enableRefresh
+        .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
 
-    fun onRefresh() {
+    val swipeRefreshTutorialVisible: LiveData<Boolean> = combine(
+        isTutorialEnabled(Tutorial.SWIPE_REFRESH),
+        _enableRefresh
+    ) { isTutorialEnabled, enableRefresh ->
+        when {
+            isTutorialEnabled.not() -> false
+            enableRefresh -> true
+            else -> false
+        }
+    }.distinctUntilChanged()
+        .asLiveData(viewModelScope.coroutineContext + Dispatchers.IO)
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                refreshPropertyAmount()
+            }.onFailure {
+                throwableHandler.handle(it)
+            }.onSuccess {
+                // nothing to do
+            }
+        }
+    }
+
+    fun onSwipeRefresh() {
         _toastEvent.value = ToastConfig(
             StringResource.from(R.string.property_amount_and_rate_update_started_message),
             duration = ToastConfig.Duration.SHORT
         )
+
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                setTutorialEnabled(Tutorial.SWIPE_REFRESH, enabled = false)
+            }.onFailure { throwable ->
+                throwableHandler.handle(throwable)
+            }
+        }
 
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -197,6 +238,16 @@ class PortfolioViewModel(
         _exchangeAccountRegisterEvent.value = Unit
     }
 
+    fun onSwipeRefreshTutorialCloseClick() {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                setTutorialEnabled(Tutorial.SWIPE_REFRESH, enabled = false)
+            }.onFailure {
+                throwableHandler.handle(it)
+            }
+        }
+    }
+
     class Factory @Inject constructor(
         private val getPortfolioItemList: GetPortfolioItemListUseCase,
         private val getSettlementCurrency: GetSettlementCurrencyUseCase,
@@ -204,7 +255,10 @@ class PortfolioViewModel(
         private val deleteProperty: DeletePropertyUseCase,
         private val updateProperty: UpdatePropertyUseCase,
         private val refreshPropertyAmount: RefreshPropertyAmountUseCase,
-        private val refreshExchangeRate: RefreshExchangeRateUseCase
+        private val refreshExchangeRate: RefreshExchangeRateUseCase,
+        private val isTutorialEnabled: IsTutorialEnabled,
+        private val setTutorialEnabled: SetTutorialEnabled,
+        private val getAllExchangeAccounts: GetAllExchangeAccountsUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
@@ -215,7 +269,10 @@ class PortfolioViewModel(
                 deleteProperty,
                 updateProperty,
                 refreshPropertyAmount,
-                refreshExchangeRate
+                refreshExchangeRate,
+                isTutorialEnabled,
+                setTutorialEnabled,
+                getAllExchangeAccounts
             ) as T
     }
 }

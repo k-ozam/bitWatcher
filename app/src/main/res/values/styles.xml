@@ -53,6 +53,10 @@
         <item name="android:src">@drawable/ic_edit</item>
     </style>
 
+    <style name="Widget.bitWatcher.ImageView.Icon.Close" parent="">
+        <item name="android:src">@drawable/ic_close</item>
+    </style>
+
     <style name="Widget.bitWatcher.TextView.Valid" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/cyan_300</item>
     </style>

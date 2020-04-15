@@ -22,6 +22,8 @@
     <string name="portfolio_register_action_link_exchange_api_label">取引所APIと連携する\n(資産残高を自動取得)</string>
     <string name="portfolio_register_action_manually_label">手動で資産を追加する</string>
 
+    <string name="swipe_refresh_tutorial_message">下にドラッグして離すと\n保有量とレートが更新されます</string>
+
     <string name="property_amount_modify_dialog_title">保有量を入力してください</string>
     <string name="property_amount_modify_positive_button">変更</string>
     <string name="property_amount_modify_completed_message">保有量を変更しました</string>

@@ -7,6 +7,7 @@ enum class SharedPreferencesElement {
     SETTLEMENT_CURRENCY,
     IS_ONBOARDING_COMPLETED,
     DATABASE_PASSPHRASE,
+    IS_SWIPE_REFRESH_TUTORIAL_ENABLED,
     ;
 
     val key: String

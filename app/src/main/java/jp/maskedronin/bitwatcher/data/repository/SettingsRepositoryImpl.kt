@@ -32,4 +32,11 @@ class SettingsRepositoryImpl @Inject constructor(
     override suspend fun setOnboardingCompleted(completed: Boolean) {
         sharedPreferencesWrapper.setOnboardingCompleted(completed)
     }
+
+    override fun isSwipeRefreshTutorialEnabled(): Flow<Boolean?> =
+        sharedPreferencesWrapper.isSwipeRefreshTutorialEnabled()
+
+    override suspend fun setSwipeRefreshTutorialEnabled(enabled: Boolean) {
+        sharedPreferencesWrapper.setSwipeRefreshTutorialEnabled(enabled)
+    }
 }
