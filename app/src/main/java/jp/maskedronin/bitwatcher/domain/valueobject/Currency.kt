@@ -441,7 +441,9 @@ enum class Currency(
 
     companion object {
         val fiats: List<Currency> = values().filter(Currency::isFiat)
+            .sortedBy { it.getSymbol() }
         val cryptos: List<Currency> = values().filter(Currency::isCrypto)
+            .sortedBy { it.toString() }
         val settlements: Set<Currency> = setOf(
             JPY,
             USD,

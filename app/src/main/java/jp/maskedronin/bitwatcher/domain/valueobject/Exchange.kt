@@ -1449,6 +1449,7 @@ enum class Exchange(
             .distinct()
             .filterNotNull()
             .filter { it.isCrypto }
+            .sortedBy { it.getSymbol() }
 
     fun toInt(): Int = ordinal
 
