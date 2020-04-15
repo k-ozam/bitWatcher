@@ -19,6 +19,13 @@ inline fun <reified T : Enum<T>> SharedPreferences.getNullableEnumAsFlow(targetK
             } else null
         }
 
+fun SharedPreferences.getNullableBooleanAsFlow(targetKey: String): Flow<Boolean?> =
+    containsAsFlow(targetKey).map { contains ->
+        if (contains) {
+            getBoolean(targetKey, false)
+        } else null
+    }
+
 fun SharedPreferences.containsAsFlow(targetKey: String): Flow<Boolean> = channelFlow {
     channel.offer(contains(targetKey))
 
