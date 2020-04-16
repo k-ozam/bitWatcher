@@ -1,14 +1,12 @@
 import java.text.SimpleDateFormat
 import java.util.Date
-
-val kotlinVersion: String by project
-val navVersion: String by project
+import dependencies.Dep
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("android.extensions")
+    kotlin("kapt")
     id("kotlinx-serialization")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.oss.licenses.plugin")
@@ -89,69 +87,66 @@ android {
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
+    implementation(Dep.Kotlin.stdlib)
+    implementation(Dep.KotlinX.serializationRuntime)
 
     // androidx
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
-    implementation("androidx.fragment:fragment-ktx:1.3.0-alpha03")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-    implementation("androidx.security:security-crypto:1.0.0-beta01")
-    val roomVersion = "2.2.5"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation(Dep.AndroidX.appCompat)
+    implementation(Dep.AndroidX.coreKtx)
+    implementation(Dep.AndroidX.constraintLayout)
+    implementation(Dep.AndroidX.swipeRefreshLayout)
+    implementation(Dep.AndroidX.fragmentKtx)
+    implementation(Dep.AndroidX.liveDataKtx)
+    implementation(Dep.AndroidX.securityCrypto)
+    implementation(Dep.AndroidX.room)
+    kapt(Dep.AndroidX.roomCompiler)
+    implementation(Dep.AndroidX.roomKtx)
+    implementation(Dep.AndroidX.navigationFragmentKtx)
+    implementation(Dep.AndroidX.navigationUiKtx)
 
-    val daggerVersion = "2.24"
-    implementation("com.google.dagger:dagger:$daggerVersion")
-    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
-    implementation("com.google.dagger:dagger-android:$daggerVersion")
-    kapt("com.google.dagger:dagger-android-processor:$daggerVersion")
-    implementation("com.google.dagger:dagger-android-support:$daggerVersion")
+    implementation(Dep.Dagger.dagger)
+    kapt(Dep.Dagger.compiler)
+    implementation(Dep.Dagger.android)
+    kapt(Dep.Dagger.androidProcessor)
+    implementation(Dep.Dagger.androidSupport)
 
-    implementation("com.squareup.retrofit2:retrofit:2.7.2")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.5.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.4.0")
+    implementation(Dep.Retrofit.retrofit)
+    implementation(Dep.Retrofit.kotlinxSerializationConverter)
+    implementation(Dep.Retrofit.loggingInterceptor)
 
-    implementation("net.zetetic:android-database-sqlcipher:4.3.0")
+    implementation(Dep.sqlCipher)
 
-    implementation("com.github.hadilq.liveevent:liveevent:1.2.0")
+    implementation(Dep.liveEvent)
 
-    implementation("com.google.android.material:material:1.1.0")
+    implementation(Dep.material)
 
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.2")
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation(Dep.threeTenAbp)
+    implementation(Dep.timber)
 
-    implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
+    implementation(Dep.ossLicense)
 
-    val hyperionVersion = "0.9.27"
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-core:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-attr:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-build-config:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-crash:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-disk:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-geiger-counter:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-measurement:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-phoenix:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-recorder:$hyperionVersion")
-    debugImplementation("com.willowtreeapps.hyperion:hyperion-shared-preferences:$hyperionVersion")
+    debugImplementation(Dep.Hyperion.core)
+    debugImplementation(Dep.Hyperion.attr)
+    debugImplementation(Dep.Hyperion.buildConfig)
+    debugImplementation(Dep.Hyperion.crash)
+    debugImplementation(Dep.Hyperion.disk)
+    debugImplementation(Dep.Hyperion.geigerCounter)
+    debugImplementation(Dep.Hyperion.measurement)
+    debugImplementation(Dep.Hyperion.phoenix)
+    debugImplementation(Dep.Hyperion.recorder)
+    debugImplementation(Dep.Hyperion.sharedPreferences)
 
-    debugImplementation("com.amitshekhar.android:debug-db-encrypt:1.0.6")
+    debugImplementation(Dep.debugDbEncrypt)
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.2")
+    debugImplementation(Dep.leakCanary)
 
-    testImplementation("junit:junit:4.12")
-    testImplementation("androidx.test:core:1.2.0")
+    testImplementation(Dep.Test.junit)
+    testImplementation(Dep.Test.core)
     // Kotlinx.serialization が Unit Testだと使えないため
-    testImplementation("com.google.code.gson:gson:2.8.6")
+    testImplementation(Dep.gson)
 
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test:rules:1.2.0")
-    androidTestImplementation("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    androidTestImplementation(Dep.AndroidTest.runner)
+    androidTestImplementation(Dep.AndroidTest.rules)
+    androidTestImplementation(Dep.AndroidTest.junit)
+    androidTestImplementation(Dep.AndroidTest.espressoCore)
 }
