@@ -13,6 +13,8 @@
 .externalNativeBuild
 .cxx
 
+/projectFilesBackup/
+
 /commands/
 *.jks
 !keystore-local-release.jks
